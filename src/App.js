@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import Navigation from "./Components/Navigation";
 import Container from "./Components/Component";
@@ -38,6 +38,7 @@ function App() {
       number.trim() !== "" &&
       password.trim() !== ""
     ) {
+      const id = +Math.random().toString().split(".")[1]
       setUsers([
         ...users,
         {
@@ -45,9 +46,27 @@ function App() {
           email: email,
           number: number,
           password: password,
-          id: +Math.random().toString().split(".")[1],
+          id: id,
         },
       ]);
+      const user = {
+        username: username,
+        email: email,
+        number: number,
+        password: password,
+        id: id,
+      }
+      fetch('http://localhost:3001/test', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(user)
+      })
+        .then(res => res.json())
+        .then(result => {
+          alert(result.message)
+        })
       resetForm();
     } else {
       setError(true);
@@ -57,6 +76,21 @@ function App() {
   };
 
   const deleteHandler = (id) => {
+    const deleteUser = users.find(user => user.id = id);
+    fetch('http://localhost:3001/test', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(deleteUser)
+    }
+    )
+      .then(res => res.json())
+      .then(result => {
+        alert(
+          result.message
+        )
+      })
     setUsers(users.filter((user) => user.id !== id));
     setEditMode(false);
     resetForm();
@@ -66,6 +100,7 @@ function App() {
     const updateUserInfo = users.find(
       (user) => user.id === id
     );
+
     setUsername(updateUserInfo.username);
     setEmail(updateUserInfo.email);
     setNumber(updateUserInfo.number);
@@ -111,6 +146,13 @@ function App() {
     setUsers(result);
   };
 
+  useEffect(() => {
+    fetch('http://localhost:3001/test')
+      .then(res => res.json())
+      .then(result => setUsers(result))
+  }, [])
+
+
   return (
     <Fragment>
       {error &&
@@ -135,9 +177,9 @@ function App() {
               submitHandler={
                 editMode
                   ? (e) => {
-                      e.preventDefault();
-                      updateHandler(userID);
-                    }
+                    e.preventDefault();
+                    updateHandler(userID);
+                  }
                   : submitHandler
               }
             >
