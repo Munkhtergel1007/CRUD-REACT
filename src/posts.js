@@ -23,10 +23,10 @@ const Posts = () => {
 
         {
             posts.map(post => (
-                <div>
-                    <h1 className="text-2xl">{post.title}</h1>
+                <div className="w-full p-4">
+                    <h1 className="text-2xl font-bold" >{post.title}</h1>
                     <div>
-                        <p className="text-xl">{posts.body}</p>
+                        <p className="">{post.body}</p>
                     </div>
                 </div>
             ))

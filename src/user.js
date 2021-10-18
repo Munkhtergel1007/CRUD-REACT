@@ -20,11 +20,19 @@ const User = () => {
         getUserData();
     }, [])
     return (
-        <div className="w-full h-screen bg-red-400 text-white flex justify-center items-center">
+        <div className="w-full h-screen bg-red-400 text-white flex flex-col justify-center items-center">
             <h1 className="text-5xl">{username}</h1>
-            <Link to={`/posts/?id=${userId}`}>
-                <p>posts</p>
-            </Link>
+         <Link to={`/posts/?id=${userId}`}>
+            <p>posts</p>
+        </Link>
+        
+        <Link to={`/albums/?id=${userId}`}>
+            <p>albums</p>
+        </Link>
+
+        <Link to={`/todos/?id=${userId}`}>
+            <p>todos</p>
+        </Link>
         </div>
     );
 };
