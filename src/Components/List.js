@@ -1,7 +1,7 @@
 import ListItem from "./ListItem";
 import Button from "./Button";
-import {MdEdit} from 'react-icons/md';
-import {RiDeleteBin5Line} from 'react-icons/ri';
+import { MdEdit } from 'react-icons/md';
+import { RiDeleteBin5Line } from 'react-icons/ri';
 const List = props => {
     return <ul>
         {
