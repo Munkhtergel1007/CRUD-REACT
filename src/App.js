@@ -12,7 +12,15 @@ import List from './Components/List';
 import Backdrop from './Components/Backdrop';
 
 
-const navigation = ["Home", "About", "Service", "Contact"];
+const navigation = [
+  {
+    title: 'LOGIN',
+    path: '/login'
+  }
+];
+
+
+
 
 function App() {
   const [editMode, setEditMode] = useState(false);
