@@ -6,7 +6,7 @@ const Map = props => {
     return <div>
         {
             props.items.map(item => {
-                return <div className="flex justify-between items-center my-2">
+                return <div className="flex justify-between items-center my-2 px-4 py-2">
                     <p>{item.text}</p>
                     <div className="flex justify-betweem items-center">
                         <Button val={<MdEdit />} bg='gray' click={(e) => {

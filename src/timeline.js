@@ -1,24 +1,26 @@
 import { useEffect, useState } from "react";
-import swal from 'sweetalert';
 
 const Timeline = ({ history }) => {
-  const [allPost, setPosts] = useState('');
+  const [allPost, setPosts] = useState([]);
   useEffect(() => {
     fetch('http://localhost:3001/allPost')
-    .then(res => res.json())
-    .then(result => {
-      setPosts(JSON.parse(result))
-    })  
-  }, [])
+      .then(res => res.json())
+      .then(result => {
+        setPosts(JSON.parse(result))
+        console.log(allPost)
+      })
+  })
 
   return <div>
     {
       allPost.map(post => {
-        <p>{post.post}</p>
+        return <div>
+          <p>{post.post}</p>
+        </div>
       })
     }
   </div>
-  
+
 }
 
 export default Timeline
