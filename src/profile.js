@@ -4,11 +4,14 @@ import Card from "./Components/Card";
 import Form from "./Components/Form";
 import Label from "./Components/Label";
 import Input from "./Components/Input";
+import swal from 'sweetalert';
 
 const Profile = ({ history }) => {
     const [username, setUsername] = useState('')
     const [post, setPost] = useState('')
     const [userId, setUserId] = useState('')
+    const [allow, setAllow] = useState(false)
+    const [posts, setPosts] = useState([])
     useEffect(() => {
         if (!localStorage.loggedUser) history.push('/login')
         else {
@@ -24,7 +27,6 @@ const Profile = ({ history }) => {
     const submitHandler = (e) => {
         e.preventDefault()
         if (post.trim() !== '') {
-            console.log(post)
             fetch('http://localhost:3001/post', {
                 method: 'POST',
                 headers: {
@@ -35,13 +37,30 @@ const Profile = ({ history }) => {
                     userId: userId
                 })
             })
-            resetForm()
+            .then(res => res.json())
+            .then(result => {
+                swal(
+                    result.message
+                )
+            })
+            resetForm();
+            setAllow(true)
+            setTimeout(() => {
+                setAllow(false)
+              }, 100)
         }
 
     }
     const resetForm = () => {
         setPost('')
     }
+    useEffect(() => {
+        fetch('http://localhost:3001/allPost')
+          .then(res => res.json())
+          .then(result => {
+            setPosts(JSON.parse(result))
+          })    
+      }, [allow]);
     return <div>
         <div className="flex justify-between p-4">
             <p className="py-2 font-bold px-4">Username : {username}</p>
@@ -60,7 +79,16 @@ const Profile = ({ history }) => {
                 <Button val='Post oruulah' type='normal' bg="green" click={submitHandler}></Button>
             </Form>
         </Card>
-
+        {
+           posts.map(post => {
+               if(post.ownerId === JSON.parse(localStorage.loggedUser)._id) {
+                return <div className="w-full px-4 py-2 flex justify-between items-center">
+                   <p>{post.post}</p>
+                   <p>{JSON.parse(localStorage.loggedUser).username}</p>
+               </div>      
+               }
+           })
+        }
     </div>
 }
 

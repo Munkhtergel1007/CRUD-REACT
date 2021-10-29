@@ -6,6 +6,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Login from './login'
 import ClassBased from './Components/classBased'
 import Profile from './profile'
+import Timeline from './timeline'
 
 ReactDOM.render(
   <BrowserRouter>
@@ -15,6 +16,7 @@ ReactDOM.render(
       <Route exact path='/login' component={Login} />
       <Route exact path='/todo' component={ClassBased} />
       <Route exact path='/profile' component={Profile} />
+      <Route exact path='/timeline' component={Timeline} />
     </Switch>
   </BrowserRouter>,
   document.getElementById('root')
